@@ -1,70 +1,64 @@
 #!/usr/bin/env node
-"use strict";
+'use strict'
 
-var express = require("express"),
+var express = require('express'),
   cors = require('cors'),
-  config = require("config"),
-  koop = require('koop')( config ),
-  socrata = require('koop-socrata'),
-  agol = require('koop-agol'),
-  pgCache = require('koop-pgcache'),
-  tiles = require('koop-tile-plugin');
+  config = require('config'),
+  koop = require('koop')(config),
+  socrata = require('koop-socrata')
+//pgCache = require('koop-pgcache')
 
-var cluster = require('cluster');
-var http = require('http');
+var cluster = require('cluster')
+var http = require('http')
 var numCPUs = require('os').cpus().length
 
 if (cluster.isMaster) {
   // Fork workers.
   for (var i = 0; i < numCPUs; i++) {
-    cluster.fork();
+    cluster.fork()
   }
 
   cluster.on('exit', function(worker, code, signal) {
-    console.log('worker ' + worker.process.pid + ' died');
-    cluster.fork();
-  });
+    console.log('worker ' + worker.process.pid + ' died')
+    cluster.fork()
+  })
 } else {
   // this is not required but is helpful
-  koop.registerCache( pgCache );
+  //koop.registerCache(pgCache)
 
   //register providers with koop
-  koop.register( socrata );
-  koop.register( agol );
-
-  // register the tiles plugin
-  koop.register( tiles );
+  koop.register(socrata)
 
   // create an express app
-  var app = express();
-  app.use( cors() );
+  var app = express()
+  app.use(cors())
 
-  app.use(function(req,res,next){
-    var oldEnd = res.end;
+  app.use(function(req, res, next) {
+    var oldEnd = res.end
 
     res.end = function() {
-      oldEnd.apply(res, arguments);
-    };
+      oldEnd.apply(res, arguments)
+    }
 
-    next();
-  });
+    next()
+  })
 
-  app.use(function (req, res, next) {
-    res.removeHeader("Vary");
-    next();
-  });
+  app.use(function(req, res, next) {
+    res.removeHeader('Vary')
+    next()
+  })
 
   // add koop middleware
-  app.use( koop );
+  app.use(koop)
 
-  app.get('/status', function(req, res){
-    res.json( koop.status );
-  });
+  app.get('/status', function(req, res) {
+    res.json(koop.status)
+  })
 
-  app.set('view engine', 'ejs');
-  app.use(express.static('views/public'));
+  app.set('view engine', 'ejs')
+  app.use(express.static('views/public'))
 
-  app.listen(process.env.PORT || config.server.port,  function() {
-    console.log("Listening at http://%s:%d/", this.address().address, this.address().port);
-  });
+  app.listen(process.env.PORT || config.server.port, function() {
+    console.log('Listening at http://%s:%d/', this.address().address, this.address().port)
+  })
 }

@@ -1,32 +1,15 @@
 {
-  "name": "koop-dc-esri",
+  "name": "koop-baltimore",
   "description": "A sample application that shows how to create an app using koop",
   "version": "1.0.0",
-  "author": "Chris Helm",
-  "bugs": {
-    "url": "https://github.com/arcgis/koop-dc-esri/issues"
-  },
   "dependencies": {
     "config": "~1.9.0",
     "cors": "^2.5.2",
     "ejs": "^1.0.0",
     "express": "4.10.1",
     "koop": "^2.12.3",
-    "koop-acs": "~0.2.0",
-    "koop-agol": "^2.0.4",
-    "koop-ckan": "~0.0.9",
-    "koop-climate": "~0.0.1",
-    "koop-cloudant": "~0.0.2",
-    "koop-fda": "^1.0.0",
-    "koop-gist": "^2.0.0",
-    "koop-github": "^1.0.0",
-    "koop-opendata": "^1.0.0",
-    "koop-osm": "~0.0.1",
     "koop-pgcache": "^1.4.2",
-    "koop-socrata": "^1.0.1",
-    "koop-tile-plugin": "^1.0.0",
-    "koop-yelp": "0.0.2",
-    "koop-zillow": "^0.1.7"
+    "koop-socrata": "^1.0.1"
   },
   "homepage": "https://github.com/arcgis/koop-dc-esri",
   "keywords": [

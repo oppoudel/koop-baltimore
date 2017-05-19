@@ -3,7 +3,8 @@
     "port": 1337
   },
   "data_dir": "/usr/local/koop/",
-  "db":{
-    "conn":"postgres://localhost/koopdev"
+  "db": {
+    "conn": "postgres://localhost/koopdev"
   }
 }
+//curl --data "host=https://data.baltimorecity.gov/&id=balt" https://koop-baltimore-rlbncsjhue.now.sh/socrata
